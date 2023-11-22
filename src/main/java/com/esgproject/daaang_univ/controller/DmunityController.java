@@ -12,20 +12,38 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dmunity")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("*")
 public class DmunityController {
 
-    private final DmunityService dmunityService;
+    private final DmunityService service;
 
-    @GetMapping("/dmunityMainPage")
-    public ResponseEntity<List<DmunityDTO>> getAllDmunity() {
-        List<DmunityDTO> allDmunities = dmunityService.getAllDmunities();
+    @GetMapping("/dmunityMainPage/{pageNo}")
+    public ResponseEntity<List<DmunityDTO>> getAllDmunity(@PathVariable Integer pageNo) {
+        List<DmunityDTO> allDmunities = service.getDmunity(pageNo);
         return new ResponseEntity<>(allDmunities, HttpStatus.OK);
     }
-
-    @GetMapping("/dmunityDetail/{dmunityNo}")
-    public ResponseEntity<DmunityDTO> getDmunityById(@PathVariable Integer dmunityNo) {
-        DmunityDTO dmunity = dmunityService.getDmunityById(dmunityNo);
-        return ResponseEntity.ok(dmunity);
+    @GetMapping("/{dmunityNo}")
+    public  ResponseEntity<DmunityDTO> getDmunity(@PathVariable Integer dmunityNo) {
+        DmunityDTO Dmunity = service.getDmunityById(dmunityNo);
+        return ResponseEntity.ok(Dmunity);
+    }
+    @PostMapping("/dmunityWrite")
+    public void writeDmunity(@RequestBody DmunityDTO dmunityDTO) {
+        service.writeDmunity(dmunityDTO);
+    }
+    @PutMapping("/dmunityEdit/{dmunityNo}")
+    public void EditDmunity(
+            @PathVariable Integer dmunityNo,
+            @RequestBody DmunityDTO updatedPost
+    ) {
+        service.editDmunity(dmunityNo, updatedPost);
+    }
+    @DeleteMapping("/{dmunityNo}/dmunityDelete")
+    public void deleteDmunity(@PathVariable Integer dmunityNo) {
+        service.deleteDmunity(dmunityNo);
+    }
+    @GetMapping("/totalPageCount")
+    public Integer getTotalPageCount() {
+        return service.getTotalPageCount();
     }
 }
