@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @RequiredArgsConstructor
 @Primary
 @Service
@@ -17,8 +16,9 @@ public class DmunityServiceImpl implements DmunityService {
     private final DmunityDAO dao;
 
     @Override
-    public List<DmunityDTO> getDmunity(Integer pageNo) {
-        return dao.findDmunity(pageNo);
+    public List<DmunityDTO> getDmunity(Integer pageNo, Integer dmunityCategory) {
+        Integer startIndex = (pageNo -1)*10;
+        return dao.findDmunity(startIndex, dmunityCategory);
     }
     @Override
     public DmunityDTO getDmunityById(Integer dmunityNo) {
@@ -40,8 +40,8 @@ public class DmunityServiceImpl implements DmunityService {
         dao.deleteDmunity(dmunityNo);
     }
     @Override
-    public Integer getTotalPageCount() {
-        return dao.getTotalPageCount();
+    public Integer getTotalPageCount(Integer category) {
+        return dao.getTotalPageCount(category);
     }
 }
 
