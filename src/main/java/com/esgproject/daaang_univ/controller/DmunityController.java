@@ -17,9 +17,11 @@ public class DmunityController {
 
     private final DmunityService service;
 
-    @GetMapping("/dmunityMainPage/{pageNo}")
-    public ResponseEntity<List<DmunityDTO>> getAllDmunity(@PathVariable Integer pageNo) {
-        List<DmunityDTO> allDmunities = service.getDmunity(pageNo);
+    @GetMapping("/dmunityMainPage")
+    public ResponseEntity<List<DmunityDTO>> getAllDmunity(
+            @RequestParam("page") Integer pageNo,
+            @RequestParam("category") Integer dmunityCategory) {
+        List<DmunityDTO> allDmunities = service.getDmunity(pageNo, dmunityCategory);
         return new ResponseEntity<>(allDmunities, HttpStatus.OK);
     }
     @GetMapping("/{dmunityNo}")
@@ -43,7 +45,7 @@ public class DmunityController {
         service.deleteDmunity(dmunityNo);
     }
     @GetMapping("/totalPageCount")
-    public Integer getTotalPageCount() {
-        return service.getTotalPageCount();
+    public Integer getTotalPageCount(@RequestParam("category") Integer category) {
+        return service.getTotalPageCount(category);
     }
 }

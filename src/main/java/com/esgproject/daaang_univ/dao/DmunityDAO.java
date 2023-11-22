@@ -9,10 +9,10 @@ import java.util.List;
 @Repository
 @Mapper
 public interface DmunityDAO {
-    List<DmunityDTO> findDmunity(Integer pageNo);
+    List<DmunityDTO> findDmunity(Integer startIndex, Integer category);
     DmunityDTO findDmunityById(Integer dmunityNo);
     void writeDmunity(DmunityDTO dmunityDTO);
     void editDmunity(DmunityDTO dmunityDTO);
     void deleteDmunity(Integer dmunityNo);
-    Integer getTotalPageCount();
+    Integer getTotalPageCount(Integer category);
 }
