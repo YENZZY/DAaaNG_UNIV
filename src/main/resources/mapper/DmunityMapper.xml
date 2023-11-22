@@ -2,10 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esgproject.daaang_univ.dao.DmunityDAO">
 
-    <select id="findById" resultType="com.esgproject.daaang_univ.dto.DmunityDTO">
-        SELECT * FROM DMUNITY WHERE DMUNITY_NO = #{dmunityNo}
-    </select>
-    <select id="findAll" resultType="com.esgproject.daaang_univ.dto.DmunityDTO">
+    <select id="findAllDmunity" resultType="com.esgproject.daaang_univ.dto.DmunityDTO">
         SELECT * FROM DMUNITY
     </select>
+
+    <select id="findDmunityById" resultType="com.esgproject.daaang_univ.dto.DmunityDTO">
+        SELECT * FROM DMUNITY WHERE DMUNITY_NO = #{dmunityNo}
+    </select>
+
+    <insert id="writeDmunity" parameterType="com.esgproject.daaang_univ.dto.DmunityDTO">
+        INSERT INTO dmunity (dmunityNo, userid, dmunityCategory, dmunityTitle, dmunityText, dmunityDate, dmunityHit, dmunityLike, dmunityComments)
+        VALUES (#{dmunityNo}, #{userid}, #{dmunityCategory}, #{dmunityTitle}, #{dmunityText}, #{dmunityDate}, #{dmunityHit}, #{dmunityLike}, #{dmunityComments})
+    </insert>
+
+    <update id="editDmunity" parameterType="com.esgproject.daaang_univ.dto.DmunityDTO">
+        UPDATE dmunity
+        SET dmunity_title = #{dmunityTitle},
+        dmunity_text = #{dmunityText},
+        dmunity_edit_date = #{dmunityEditDate}
+        WHERE dmunity_no = #{dmunityNo}
+    </update>
+
+    <delete id="deleteDmunity" parameterType="com.esgproject.daaang_univ.dto.DmunityDTO">
+        DELETE FROM dmunity WHERE dmunity_no = #{dmunityNo}
+    </delete>
+
 </mapper>
